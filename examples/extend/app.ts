@@ -8,6 +8,13 @@ axios({
   }
 })
 
+axios('/extend/post', {
+    method: 'post',
+    data: {
+      msg: 'axios overloading'
+    }
+})
+
 axios.request({
   url: '/extend/post',
   method: 'post',
