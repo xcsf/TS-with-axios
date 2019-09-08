@@ -1,6 +1,3 @@
-import { timeouts } from 'retry'
-import { request } from 'http'
-
 export type Method =
   | 'get'
   | 'GET'
@@ -57,6 +54,11 @@ export interface Axios {
   put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
 
   patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
+
+  interceptors: {
+    request: AxiosInterceptorManager<AxiosRequestConfig>
+    response: AxiosInterceptorManager<AxiosResponse>
+  }
 }
 
 export interface AxiosInstance extends Axios {
@@ -65,7 +67,7 @@ export interface AxiosInstance extends Axios {
   <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
-export interface ResolvedFn<T> {
+export interface ResolvedFn<T = any> {
   (val: T): T | Promise<T>
 }
 
@@ -73,6 +75,6 @@ export interface RejectedFn {
   (error: any): any
 }
 export interface AxiosInterceptorManager<T> {
-  use(resolved: ResolvedFn<T>, rejected: RejectedFn): number
+  use(resolved: ResolvedFn<T>, rejected?: RejectedFn): number
   eject(id: number): void
 }
