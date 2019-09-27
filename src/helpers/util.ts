@@ -40,4 +40,5 @@ export function deepMerge(...objs: any[]): any {
       })
     }
   })
+  return result
 }

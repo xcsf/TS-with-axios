@@ -41,6 +41,8 @@ export interface AxiosError extends Error {
   response?: AxiosResponse
 }
 export interface Axios {
+  defaults: AxiosRequestConfig
+
   request<T = any>(config: AxiosRequestConfig): AxiosPromise<T>
 
   get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
