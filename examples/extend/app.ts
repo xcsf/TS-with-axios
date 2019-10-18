@@ -1,26 +1,26 @@
 import axios from '../../src/index'
 
 axios({
-  url: '/extend/post',
-  method: 'post',
-  data: {
-    msg: 'hi'
-  }
+    url: '/extend/post',
+    method: 'post',
+    data: {
+        msg: 'hi'
+    }
 })
 
 axios('/extend/post', {
     method: 'post',
     data: {
-      msg: 'axios overloading'
+        msg: 'axios overloading'
     }
 })
 
 axios.request({
-  url: '/extend/post',
-  method: 'post',
-  data: {
-    msg: 'hello'
-  }
+    url: '/extend/post',
+    method: 'post',
+    data: {
+        msg: 'hello'
+    }
 })
 
 axios.get('/extend/get')
@@ -44,30 +44,30 @@ export interface ResponseData<T = any> {
      * @type { number }
      */
     code: number
-  
+
     /**
      * 数据
      * @type { T }
      */
     result: T
-  
+
     /**
      * 消息
      * @type { string }
      */
     message: string
-  }
+}
 
-  function getUser<T>() {
+function getUser<T>() {
     return axios.get<ResponseData<T>>('/extend/user')
-      .then(res => res.data)
-      .catch(err => console.error(err))
-  }
-  interface User {
+        .then(res => res.data)
+        .catch(err => console.error(err))
+}
+interface User {
     name: string
     age: number
-  }
-  async function test() {
+}
+async function test() {
     // user 被推断出为
     // {
     //  code: number,
@@ -75,5 +75,5 @@ export interface ResponseData<T = any> {
     //  message: string
     // }
     const user = await getUser<User>()
-  }
-  test()
+}
+test()
