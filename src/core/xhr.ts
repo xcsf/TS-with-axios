@@ -10,10 +10,12 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
             headers,
             responseType,
             timeout,
-            cancelToken
+            cancelToken,
+            withCredentials
         } = config
 
         const request = new XMLHttpRequest()
+        withCredentials && (request.withCredentials = withCredentials)
         responseType && (request.responseType = responseType)
         request.open(method.toUpperCase(), url!, true)
         request.onreadystatechange = function handleLoad() {
