@@ -13,6 +13,10 @@ const defaults: AxiosRequestConfig = {
         }
     },
 
+    // xsrfCookieName: 'XSRF-TOKEN',
+
+    // xsrfHeaderName: 'X-XSRF-TOKEN',
+
     transformResponse: [
         function(data: any): any {
             return transformResponse(data)

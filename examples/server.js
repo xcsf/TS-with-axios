@@ -9,7 +9,11 @@ const cookieParser = require('cookie-parser')
 const app = express()
 const compiler = webpack(WebpackConfig)
 app.use(cookieParser())
-
+app.use(express.static(__dirname, {
+    setHeaders(res) {
+        res.cookie('XSRF-TOKEN-D', '1234abc')
+    }
+}))
 app.use(webpackDevMiddleware(compiler, {
     publicPath: '/__build__/',
     stats: {
@@ -169,6 +173,9 @@ function registerCancelRouter() {
 
 function registerMoreRouter() {
     router.get('/more/get', function (req, res) {
+        res.json(req.cookies)
+    })
+    router.get('/more/get1', function (req, res) {
         res.json(req.cookies)
     })
 }
