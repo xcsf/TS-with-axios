@@ -5,6 +5,8 @@ const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const WebpackConfig = require('./webpack.config')
 const cookieParser = require('cookie-parser')
+const multipart = require('connect-multiparty')
+const path = require('path')
 
 const app = express()
 const compiler = webpack(WebpackConfig)
@@ -14,6 +16,10 @@ app.use(express.static(__dirname, {
         res.cookie('XSRF-TOKEN-D', '1234abc')
     }
 }))
+
+app.use(multipart({ uploadDir: path.resolve(__dirname, 'upload-file')
+}))
+
 app.use(webpackDevMiddleware(compiler, {
     publicPath: '/__build__/',
     stats: {
@@ -177,5 +183,10 @@ function registerMoreRouter() {
     })
     router.get('/more/get1', function (req, res) {
         res.json(req.cookies)
+    })
+
+    router.post('/more/upload', function (req, res) {
+        console.log(req.body, req.files)
+        res.end('upload success!')
     })
 }
