@@ -79,3 +79,15 @@ uploadEl.addEventListener('click', e => {
         instance.post('/more/upload', data)
     }
 })
+
+const instance2 = axios.create()
+instance2.post('/more/post', {
+    a: 1
+}, {
+    auth: {
+        username: 'Yee',
+        password: '123456'
+    }
+}).then(res => {
+    console.log(res)
+})
