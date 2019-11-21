@@ -1,6 +1,7 @@
 import axios from '../../src/index'
 import 'nprogress/nprogress.css'
 import NProgress from "nprogress"
+import qs from 'qs'
 import { AxiosError } from '../../src/helpers/error'
 import { debug } from 'util'
 
@@ -109,4 +110,38 @@ instancevalidate.get('/more/304', {
     console.log(res)
 }).catch((e: AxiosError) => {
     console.log(e.message)
+})
+
+const oParamsSerializer = axios.create()
+
+oParamsSerializer.get('/more/get', {
+    params: new URLSearchParams('a=b&c=d')
+}).then(res => {
+    console.log(res)
+})
+
+oParamsSerializer.get('/more/get', {
+    params: {
+        a: 1,
+        b: 2,
+        c: ['a', 'b', 'c']
+    }
+}).then(res => {
+    console.log(res)
+})
+
+const oParamsSerializer1 = axios.create({
+    paramsSerializer(params) {
+        return qs.stringify(params, { arrayFormat: 'brackets' })
+    }
+})
+
+oParamsSerializer1.get('/more/get', {
+    params: {
+        a: 1,
+        b: 2,
+        c: ['a', 'b', 'c']
+    }
+}).then(res => {
+    console.log(res)
 })
