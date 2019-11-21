@@ -18,7 +18,8 @@ app.use(express.static(__dirname, {
     }
 }))
 
-app.use(multipart({ uploadDir: path.resolve(__dirname, 'upload-file')
+app.use(multipart({
+    uploadDir: path.resolve(__dirname, 'upload-file')
 }))
 
 app.use(webpackDevMiddleware(compiler, {
@@ -200,5 +201,10 @@ function registerMoreRouter() {
         } else {
             res.end('UnAuthorization')
         }
+    })
+
+    router.get('/more/304', function (req, res) {
+        res.status(304)
+        res.end()
     })
 }

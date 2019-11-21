@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from './types'
 import { transformResponse, transformRequest } from './helpers/data'
 import { processHeaders } from './helpers/headers'
+import { debug } from 'util'
 
 const defaults: AxiosRequestConfig = {
     method: 'get',
@@ -27,7 +28,10 @@ const defaults: AxiosRequestConfig = {
             processHeaders(headers, data)
             return transformRequest(data)
         }
-    ]
+    ],
+    validateStatus(status: number): boolean {
+        return status >= 200 && status < 300
+    }
 }
 
 const methodsNoData = ['delete', 'get', 'head', 'options']
